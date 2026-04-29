@@ -13,6 +13,8 @@ async function getProducts() {
   // 請實作此函式
   // 提示：使用 fetchProducts() 取得產品陣列
   // 回傳格式：{ products, count: 產品數量 }
+  const productsArry = await fetchProducts();
+  return {products: productsArry, count: productsArry.length};
 }
 
 /**
@@ -24,6 +26,8 @@ async function getProductsByCategory(category) {
   // 請實作此函式
   // 提示：使用 fetchProducts() 取得所有產品後，篩選出符合 category 的產品
   // 回傳格式：篩選後的產品陣列
+  const productsArry = await fetchProducts();
+  return productsArry.filter(obj => obj.category === category);
 }
 
 /**
@@ -35,6 +39,8 @@ async function getProductById(productId) {
   // 請實作此函式
   // 提示：使用 fetchProducts() 取得所有產品後，找出 id 符合的產品
   // 若找不到，回傳 null
+  const productsArry = await fetchProducts();
+  return productsArry.find(obj => obj.id === productId) || null;
 }
 
 /**
@@ -44,6 +50,11 @@ async function getProductById(productId) {
 async function getCategories() {
   // 請實作此函式
   // 提示：使用 fetchProducts() 取得所有產品後，代入到 utils getAllCategories()
+
+  const productsArry = await fetchProducts();
+  // 取得所有產品分類（不重複） getAllCategories(products)
+  // 取出的結果 productsArry = products 要代入的參數
+  return getAllCategories(productsArry); // 這邊不用 await，因為不是 async 函式
 }
 
 /**
@@ -63,6 +74,14 @@ function displayProducts(products) {
   //    原價：NT$ 1,000
   //    售價：NT$ 800 (8折)
   // ----------------------------------------
+
+  products.forEach( (product, index) => (
+  `${product.index +1}.${product.title}\n`+
+  `   分類：${product.category}\n`+
+  `   原價：${formatCurrency(product.origin_price)}\n`+     
+  `   售價：${formatCurrency(product.price)} (${getDiscountRate(product)})`        
+  ) )
+
 }
 
 module.exports = {
