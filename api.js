@@ -58,7 +58,7 @@ async function addToCart(productId, quantity) {
 async function updateCartItem(cartId, quantity) {
   // 請實作此函式
   
-  const updataData = { data: {cartId, quantity} };
+  const updataData = { data: {id:cartId, quantity} };
   const response = await axios.patch(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, updataData)
   return response.data;
     // response.data 資料結構：{status, carts:{...}, total, finalTotal}
@@ -73,7 +73,7 @@ async function updateCartItem(cartId, quantity) {
 async function deleteCartItem(cartId) {
   // 請實作此函式
   
-  const response = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, cartId);
+  const response = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts/${cartId}`);
   return response.data;  // 應回傳物件
   // response.data 格式 { status, carts:[{...},{...}], Total ,finalTotal} 
 
